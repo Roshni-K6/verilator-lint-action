@@ -1,0 +1,27 @@
+name: Verilator Lint Action
+
+description: Run Verilator lint and generate JSON results
+
+inputs:
+  files:
+    description: "Space separated list of .sv files"
+    required: true
+
+  severity:
+    description: "warning or error"
+    required: true
+
+outputs:
+  result:
+    description: "JSON lint result"
+
+runs:
+  using: composite
+
+  steps:
+    - shell: bash
+      run: |
+        python3 ${{ github.action_path }}/lint.py
+      env:
+        INPUT_FILES: ${{ inputs.files }}
+        INPUT_SEVERITY: ${{ inputs.severity }}
